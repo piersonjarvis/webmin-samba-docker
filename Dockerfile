@@ -24,4 +24,5 @@ RUN sed -i 's/10000/80/g' /etc/webmin/miniserv.conf && \
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf 
 
 RUN echo root:webmin | chpasswd
+VOLUME /config 
 CMD [ "/bin/bash","/Service-check.sh" ]
