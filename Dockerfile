@@ -1,11 +1,12 @@
 FROM ubuntu
-EXPOSE 80
+EXPOSE 80 139 445
 WORKDIR /
 COPY Service-check.sh .
 RUN apt-get update && apt-get upgrade -y
 RUN apt-get install apt-transport-https wget samba samba-common -y && \
-mkdir /media/storage && \
-chmod 0777 /media/storage
+mkdir /media/storage /data /data/samba /data/webmin && \
+chmod 0777 /media/storage /data /data/samba /data/webmin && \
+ln -s /data/samba /etc/samba && ln -s /data/webmin /etc/webmin
 
 RUN echo "deb https://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
 cd /root && \
