@@ -3,10 +3,12 @@ EXPOSE 80 139 445
 WORKDIR /
 COPY Service-check.sh .
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install apt-transport-https wget samba samba-common -y && \
-mkdir /media/storage /data && \
-chmod 0777 /media/storage /data /data/samba /data/webmin && \
-ln -s /etc/samba /data && ln -s /etc/webmin /data
+RUN apt-get install apt-transport-https wget samba samba-common unison -y && \
+mkdir /media/storage /data /data/samba /data/webmin
+
+VOLUME /data
+
+RUN chmod -R 0777 /media/storage /data
 
 RUN echo "deb https://download.webmin.com/download/repository sarge contrib" >> /etc/apt/sources.list && \
 cd /root && \
@@ -24,5 +26,4 @@ RUN sed -i 's/10000/80/g' /etc/webmin/miniserv.conf && \
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf 
 
 RUN echo root:webmin | chpasswd
-VOLUME /data
 CMD [ "/bin/bash","/Service-check.sh" ]
