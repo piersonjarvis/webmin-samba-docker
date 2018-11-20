@@ -3,7 +3,7 @@ EXPOSE 80 139 445
 WORKDIR /
 COPY Service-check.sh .
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install apt-transport-https wget samba samba-common unison -y && \
+RUN apt-get install apt-transport-https wget samba samba-common -y && \
 mkdir /media/storage /data /data/samba /data/webmin
 
 VOLUME /data
@@ -26,4 +26,7 @@ RUN sed -i 's/10000/80/g' /etc/webmin/miniserv.conf && \
 sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf 
 
 RUN echo root:webmin | chpasswd
+
+RUN cp /etc/samba/* /data/samba/. && cp /etc/webmin/* /data/webmin/.
+
 CMD [ "/bin/bash","/Service-check.sh" ]
