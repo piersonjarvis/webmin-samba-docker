@@ -27,6 +27,4 @@ sed -i 's/ssl=1/ssl=0/g' /etc/webmin/miniserv.conf
 
 RUN echo root:webmin | chpasswd
 
-RUN cp /etc/samba/* /data/samba/. && cp /etc/webmin/* /data/webmin/.
-
 CMD [ "/bin/bash","/Service-check.sh" ]
