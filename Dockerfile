@@ -1,10 +1,10 @@
 FROM ubuntu
-EXPOSE 80 139 445
+EXPOSE 8080 139 445
 WORKDIR /
 COPY Service-check.sh .
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install apt-transport-https wget samba samba-common -y && \
-mkdir /media/storage /data /data/samba /data/webmin
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install apt-transport-https wget samba samba-common -y && \
+    mkdir /media/storage /data /data/samba /data/webmin
 
 VOLUME /data
 
